@@ -284,6 +284,47 @@ public class HelloApplication extends Application {
             }
         });
 
+        // lista pt sort-urilr din Commands
+        ListView<String> sortedResultsList = new ListView<>();
+        Label sortResultsLabel = new Label("Sorted Results:");
+
+        Button sortByDayButton = new Button("Sort by Day");
+        Button sortByMonthButton = new Button("Sort by Month");
+        Button sortByPopularCakeButton = new Button("Most Ordered Cakes");
+
+        String sortButtonStyle = "-fx-background-color: rgba(173, 216, 230, 0.5); " +
+                "-fx-border-color: black; " +
+                "-fx-border-width: 2px; " +
+                "-fx-text-fill: black; " +
+                "-fx-font-weight: bold; " +
+                "-fx-padding: 5px 15px;";
+
+        sortByDayButton.setStyle(sortButtonStyle);
+        sortByMonthButton.setStyle(sortButtonStyle);
+        sortByPopularCakeButton.setStyle(sortButtonStyle);
+
+        VBox sortingBox = new VBox(10);
+        sortingBox.getChildren().addAll(sortByDayButton, sortByMonthButton, sortByPopularCakeButton, sortResultsLabel, sortedResultsList);
+        commandsBox.getChildren().add(sortingBox);
+
+        sortByDayButton.setOnAction(_ -> {
+            sortedResultsList.getItems().clear();
+            service.nrTorturiComandatePeZi().forEach((day, count) ->
+                    sortedResultsList.getItems().add("Date: " + day + " - Cakes Ordered: " + count));
+        });
+
+        sortByMonthButton.setOnAction(_ -> {
+            sortedResultsList.getItems().clear();
+            service.nrTorturiComandatePeLuna().forEach((month, count) ->
+                    sortedResultsList.getItems().add("Month: " + month + " - Cakes Ordered: " + count));
+        });
+
+        sortByPopularCakeButton.setOnAction(_ -> {
+            sortedResultsList.getItems().clear();
+            service.celeMaiDesComandateTorturi().forEach((cake, count) ->
+                    sortedResultsList.getItems().add("Cake Type: " + cake + " - Orders: " + count));
+        });
+
 
         //AM VRUT SA FAC GUI SA ARATE CUTE ^_^
 
@@ -342,7 +383,7 @@ public class HelloApplication extends Application {
 
 
         tabPane.getTabs().addAll(cakesTab, commandsTab);
-        Scene scene = new Scene(tabPane);
+        Scene scene = new Scene(tabPane, 900, 900);
         stage.setTitle("Cake Orders");
         stage.setScene(scene);
         stage.show();
