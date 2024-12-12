@@ -44,7 +44,7 @@ public class HelloApplication extends Application {
         cakesBox.setSpacing(10);
 
         //tabela si coloane pt Cakes
-        TableView<Cake> cakesTable = new TableView();
+        TableView<Cake> cakesTable = new TableView<>();
         TableColumn<Cake, Integer> idColumn = new TableColumn<>("ID");
         TableColumn<Cake, String> typeColumn = new TableColumn<>("Type");
 
@@ -87,7 +87,7 @@ public class HelloApplication extends Application {
         commandsBox.setSpacing(10);
 
         //tabela pt Commands
-        TableView<Command> commandsTable = new TableView();
+        TableView<Command> commandsTable = new TableView<>();
         TableColumn<Command, Integer> idCommands = new TableColumn<>("ID");
         TableColumn<Command, Date> dateCommands = new TableColumn<>("Date");
         TableColumn<Command, String> cakesCommands = new TableColumn<>("Cakes");
@@ -138,7 +138,7 @@ public class HelloApplication extends Application {
         commandsTab.setContent(commandsBox);
 
         //accesare tabelaa Cakes
-        cakesTable.setOnMouseClicked(event -> {
+        cakesTable.setOnMouseClicked(_ -> {
             Cake selectedCake = cakesTable.getSelectionModel().getSelectedItem();
             if (selectedCake != null) {
                 idTextField.setText(String.valueOf(selectedCake.getId()));
@@ -147,7 +147,7 @@ public class HelloApplication extends Application {
         });
 
         //de aici incep sa programez actiunea butoanelor
-        addCakeButton.setOnAction(e -> {
+        addCakeButton.setOnAction(_ -> {
             try {
                 String type = typeTextField.getText();
                 if (!type.trim().isEmpty()) {
@@ -162,7 +162,7 @@ public class HelloApplication extends Application {
             }
         });
 
-        deleteCakeButton.setOnAction(e -> {
+        deleteCakeButton.setOnAction(_ -> {
             try {
                 int id = Integer.parseInt(idTextField.getText());
                 service.deleteCake(id);
@@ -175,7 +175,7 @@ public class HelloApplication extends Application {
             }
         });
 
-        updateCakeButton.setOnAction(e -> {
+        updateCakeButton.setOnAction(_ -> {
             try {
                 int id = Integer.parseInt(idTextField.getText());
                 String type = typeTextField.getText();
@@ -192,7 +192,7 @@ public class HelloApplication extends Application {
         });
 
         //accesare tabela Commands
-        commandsTable.setOnMouseClicked(event -> {
+        commandsTable.setOnMouseClicked(_ -> {
             Command selectedCommand = commandsTable.getSelectionModel().getSelectedItem();
             if (selectedCommand != null) {
                 commandsIdTextField.setText(String.valueOf(selectedCommand.getId()));
@@ -207,7 +207,7 @@ public class HelloApplication extends Application {
         });
 
         //de aici incep sa programez accesarea butoanelor
-        addCommandButton.setOnAction(e -> {
+        addCommandButton.setOnAction(_ -> {
             try {
                 Date date = new SimpleDateFormat("yyyy-MM-dd").parse(commandsDateTextField.getText());
                 //String cakesText = commandsCakesTextField.getText();
@@ -229,7 +229,7 @@ public class HelloApplication extends Application {
         });
 
 
-        deleteCommandButton.setOnAction(e -> {
+        deleteCommandButton.setOnAction(_ -> {
             try {
                 int id = Integer.parseInt(commandsIdTextField.getText());
                 service.deleteCommand(id);
@@ -242,7 +242,7 @@ public class HelloApplication extends Application {
             }
         });
 
-        updateCommandButton.setOnAction(e -> {
+        updateCommandButton.setOnAction(_ -> {
             try {
                 int id = Integer.parseInt(commandsIdTextField.getText());
                 Date date = new SimpleDateFormat("yyyy-MM-dd").parse(commandsDateTextField.getText());

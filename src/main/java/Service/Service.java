@@ -5,10 +5,6 @@ import Domain.Command;
 import Repository.Repository;
 
 import java.text.SimpleDateFormat;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -113,7 +109,7 @@ public class Service {
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue,
-                        (oldValue, newValue) -> oldValue,
+                        (oldValue, _) -> oldValue,
                         LinkedHashMap::new
                 ));
     }
@@ -134,7 +130,7 @@ public class Service {
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue,
-                        (oldValue, newValue) -> oldValue,
+                        (oldValue, _) -> oldValue,
                         LinkedHashMap::new
                 ));
     }

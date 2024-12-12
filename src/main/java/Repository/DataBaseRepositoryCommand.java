@@ -18,7 +18,7 @@ public class DataBaseRepositoryCommand extends Repository<Command> {
     private static final Faker faker = new Faker();
     private static final Random random = new Random();
 
-    public DataBaseRepositoryCommand() throws SQLException {
+    public DataBaseRepositoryCommand() {
         openConnection();
         createTable();
         loadData();
@@ -108,7 +108,7 @@ public class DataBaseRepositoryCommand extends Repository<Command> {
     //generam o data random (din 2022 aprox)
     private Date generateRandomDate() {
         long currentTime = System.currentTimeMillis();
-        long randomTime = currentTime - (long) (random.nextInt(365 * 2) * 24L * 60L * 60L * 1000L);
+        long randomTime = currentTime - (random.nextInt(365 * 2) * 24L * 60L * 60L * 1000L);
         return new Date(randomTime);
     }
 

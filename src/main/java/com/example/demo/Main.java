@@ -28,13 +28,15 @@ public class Main {
         String repositoryType = properties.getProperty("repositoryType");
         Repository<Cake> cakeRepo;
         Repository<Command> commandRepo;
+        String cakeFile;
+        String commandFile;
         if (repositoryType == null || (!repositoryType.equals("text") && !repositoryType.equals("binary") && !repositoryType.equals("memory")) && !repositoryType.equals("json") && !repositoryType.equals("dataBase")) {
             throw new IllegalArgumentException("Invalid repository type specified in settings.");
         } else {
             switch (repositoryType) {
                 case "text":
-                    String cakeFile = properties.getProperty("CakesFile");
-                    String commandFile = properties.getProperty("CommandsFile");
+                    cakeFile = properties.getProperty("CakesFile");
+                    commandFile = properties.getProperty("CommandsFile");
                     cakeRepo = new TextFileRepository<>(cakeFile, new CakeFactory());
                     commandRepo = new TextFileRepository<>(commandFile, new CommandFactory());
                     break;
@@ -48,12 +50,6 @@ public class Main {
                     cakeRepo = new Repository<Cake>();
                     commandRepo = new Repository<Command>();
                     break;
-//                case "json":
-//                    cakeFile = properties.getProperty("CakesFile");
-//                    commandFile = properties.getProperty("CommandsFile");
-//                    cakeRepo = new JSONRepository<Cake>(cakeFile, new CakeFactoryJSON());
-//                    commandRepo = new JSONRepository<Command>(commandFile, new CommandFactoryJSON());
-//                    break;
                 case "dataBase":
                     cakeRepo = new DataBaseRepositoryCake();
                     commandRepo = new DataBaseRepositoryCommand();
@@ -62,8 +58,6 @@ public class Main {
                     throw new IllegalArgumentException("Repository type not supported: " + repositoryType);
             }
         }
-
-        ///TODO database repository
 
         Service service = new Service(cakeRepo, commandRepo);
         UI ui = new UI(service);
