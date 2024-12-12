@@ -1,0 +1,7 @@
+Tue Oct 15 03:02:21 EEST 2024|100:Chocolate,102:Strawberry,103:Red Velvet,
+Mon Nov 11 21:42:11 EET 2024|102:Strawberry,
+Sun Nov 10 12:08:44 EET 2024|100:Chocolate,
+Mon Nov 11 14:09:27 EET 2024|101:Vanilla,105:Pistachio,
+Mon Nov 11 21:41:40 EET 2024|100:Chocolate,103:Red Velvet,
+Thu Nov 14 18:45:31 EET 2024|101:Vanilla,105:Pistachio,
+Thu Nov 14 19:01:43 EET 2024|101:Vanilla,104:Lemon,
