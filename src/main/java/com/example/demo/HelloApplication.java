@@ -299,6 +299,11 @@ public class HelloApplication extends Application {
                 "-fx-font-weight: bold; " +
                 "-fx-padding: 5px 15px;";
 
+        String sortLabelStyle = "-fx-background-color: rgba(0, 0, 139, 0.5); " +
+                "-fx-border-color: black; " +
+                "-fx-border-width: 2px;";
+        sortResultsLabel.setStyle(sortLabelStyle);
+
         sortByDayButton.setStyle(sortButtonStyle);
         sortByMonthButton.setStyle(sortButtonStyle);
         sortByPopularCakeButton.setStyle(sortButtonStyle);
