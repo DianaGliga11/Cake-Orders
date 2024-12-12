@@ -1,4 +1,4 @@
-package com.example.demo.UI;
+package UI;
 
 import Domain.Cake;
 import Domain.Command;

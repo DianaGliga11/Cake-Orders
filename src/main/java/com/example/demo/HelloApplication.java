@@ -20,7 +20,6 @@ import Repository.Repository;
 import Repository.ObjectNotFoundException;
 import Repository.DuplicateIDException;
 
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,7 +29,7 @@ import java.util.stream.Collectors;
 public class HelloApplication extends Application {
 
     @Override
-    public void start(Stage stage) throws SQLException {
+    public void start(Stage stage) {
         Repository<Cake> repositoryCake = new DataBaseRepositoryCake();
         Repository<Command> repositoryCommand = new DataBaseRepositoryCommand();
         Service service = new Service(repositoryCake, repositoryCommand);
@@ -154,6 +153,8 @@ public class HelloApplication extends Application {
                     service.addCake(type);
                     observableListCakes.setAll(service.getAllCakes());
                 }
+                idTextField.clear();
+                typeTextField.clear();
             } catch (DuplicateIDException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -167,6 +168,8 @@ public class HelloApplication extends Application {
                 int id = Integer.parseInt(idTextField.getText());
                 service.deleteCake(id);
                 observableListCakes.setAll(service.getAllCakes());
+                idTextField.clear();
+                typeTextField.clear();
             } catch (ObjectNotFoundException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -183,6 +186,8 @@ public class HelloApplication extends Application {
                     service.updateCake(id, type);
                     observableListCakes.setAll(service.getAllCakes());
                 }
+                idTextField.clear();
+                typeTextField.clear();
             } catch (ObjectNotFoundException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Warning");
@@ -220,6 +225,9 @@ public class HelloApplication extends Application {
                     observableListCommands.clear();
                     observableListCommands.setAll(service.getAllCommands());
                 }
+                commandsIdTextField.clear();
+                commandsDateTextField.clear();
+                commandsCakesTextField.clear();
             } catch (DuplicateIDException | ParseException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Warning");
@@ -234,6 +242,9 @@ public class HelloApplication extends Application {
                 int id = Integer.parseInt(commandsIdTextField.getText());
                 service.deleteCommand(id);
                 observableListCommands.setAll(service.getAllCommands());
+                commandsIdTextField.clear();
+                commandsDateTextField.clear();
+                commandsCakesTextField.clear();
             } catch (ObjectNotFoundException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Warning");
@@ -246,23 +257,20 @@ public class HelloApplication extends Application {
             try {
                 int id = Integer.parseInt(commandsIdTextField.getText());
                 Date date = new SimpleDateFormat("yyyy-MM-dd").parse(commandsDateTextField.getText());
-
-                // Extrage tipurile de torturi din textfield și le mapează în obiecte Cake
-                String[] cakesTypes = commandsCakesTextField.getText().split(",\\s*");
-                List<Cake> allCakes = service.getAllCakes(); // Lista de torturi din baza de date
-
-                // Obține ID-urile torturilor selectate
+                String[] cakesTypes = commandsCakesTextField.getText().split(", ");
+                List<Cake> allCakes = service.getAllCakes();
                 List<Integer> selectedCakeIds = allCakes.stream()
                         .filter(cake -> List.of(cakesTypes).contains(cake.getType()))
                         .map(Cake::getId)
-                        .distinct() // Elimină duplicatele
+                        .distinct()
                         .collect(Collectors.toList());
-
                 if (!selectedCakeIds.isEmpty()) {
-                    // Actualizează comanda în baza de date
                     service.updateCommand(id, selectedCakeIds, date);
                     observableListCommands.setAll(service.getAllCommands());
                 }
+                commandsIdTextField.clear();
+                commandsDateTextField.clear();
+                commandsCakesTextField.clear();
             } catch (ObjectNotFoundException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -275,6 +283,63 @@ public class HelloApplication extends Application {
                 alert.show();
             }
         });
+
+
+        //AM VRUT SA FAC GUI SA ARATE CUTE ^_^
+
+        //personalizare tabele
+        String tableStyle = "-fx-background-color: rgba(148, 0, 211, 0.5); " +
+                "-fx-border-color: black; " +
+                "-fx-border-width: 2px;";
+        cakesTable.setStyle(tableStyle);
+        commandsTable.setStyle(tableStyle);
+
+        //personalizare tab-uri
+        String tabStyle = "-fx-background-color: rgba(0, 0, 139, 0.5); " +
+                "-fx-text-fill: white; " +
+                "-fx-font-weight: bold; " +
+                "-fx-border-color: black; " +
+                "-fx-border-width: 2px;" +
+                "-fx-padding: 10px;";
+        tabPane.setStyle("-fx-tab-min-width: 150px; -fx-tab-max-height: 30px;");
+        cakesTab.setStyle(tabStyle);
+        commandsTab.setStyle(tabStyle);
+
+        //personalizare butoanele
+        String buttonStyle = "-fx-background-color: rgba(173, 216, 230, 0.5); " +
+                "-fx-border-color: black; " +
+                "-fx-border-width: 2px; " +
+                "-fx-text-fill: black; " +
+                "-fx-font-weight: bold; " +
+                "-fx-padding: 5px 15px;";
+        addCakeButton.setStyle(buttonStyle);
+        deleteCakeButton.setStyle(buttonStyle);
+        updateCakeButton.setStyle(buttonStyle);
+
+        addCommandButton.setStyle(buttonStyle);
+        deleteCommandButton.setStyle(buttonStyle);
+        updateCommandButton.setStyle(buttonStyle);
+
+        //personalizare etichetele
+        String labelStyle = "-fx-text-fill: black; -fx-font-size: 14px; -fx-font-weight: bold;";
+        idLabel.setStyle(labelStyle);
+        typeLabel.setStyle(labelStyle);
+        commandsIdLabel.setStyle(labelStyle);
+        commandsDateLabel.setStyle(labelStyle);
+        commandsCakesLabel.setStyle(labelStyle);
+
+        //personalizare câmpurile de text
+        String textFieldStyle = "-fx-background-color: rgba(255, 182, 193, 0.5); " +
+                "-fx-border-color: black; " +
+                "-fx-border-width: 2px; " +
+                "-fx-text-fill: black; " +
+                "-fx-padding: 5px;";
+        idTextField.setStyle(textFieldStyle);
+        typeTextField.setStyle(textFieldStyle);
+        commandsIdTextField.setStyle(textFieldStyle);
+        commandsDateTextField.setStyle(textFieldStyle);
+        commandsCakesTextField.setStyle(textFieldStyle);
+
 
         tabPane.getTabs().addAll(cakesTab, commandsTab);
         Scene scene = new Scene(tabPane);

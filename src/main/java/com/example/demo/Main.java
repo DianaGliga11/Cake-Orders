@@ -6,7 +6,7 @@ import Domain.Command;
 import Domain.CommandFactory;
 import Repository.*;
 import Service.Service;
-import com.example.demo.UI.UI;
+import UI.UI;
 
 import java.io.InputStream;
 import java.util.Properties;
